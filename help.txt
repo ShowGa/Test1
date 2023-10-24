@@ -1,0 +1,1 @@
+https://stackoverflow.com/questions/14448981/remove-keydown-delay-in-javascript

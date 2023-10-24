@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      .game-container {
+        position: relative;
+        width: 400px;
+        height: 400px;
+        border: 2px solid #000;
+      }
+
+      .ball {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background-color: red;
+        border-radius: 50%;
+      }
+
+      .block {
+        position: absolute;
+        width: 50px;
+        height: 20px;
+        background-color: blue;
+        top: 100px;
+        left: 175px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="game-container">
+      <div class="ball"></div>
+      <div class="block"></div>
+    </div>
+
+    <script>
+      const ball = document.querySelector(".ball");
+      const block = document.querySelector(".block");
+      const gameContainer = document.querySelector(".game-container");
+
+      let ballX = 200;
+      let ballY = 350;
+      let ballSpeedX = 5;
+      let ballSpeedY = -5;
+      const ballRadius = 10;
+      const blockWidth = 50;
+      const blockHeight = 20;
+
+      function update() {
+        ballX += ballSpeedX;
+        ballY += ballSpeedY;
+
+        // 反彈邏輯
+        if (
+          ballX + ballRadius > gameContainer.offsetWidth ||
+          ballX - ballRadius < 0
+        ) {
+          ballSpeedX *= -1;
+        }
+
+        if (ballY - ballRadius < 0) {
+          ballSpeedY *= -1;
+        }
+
+        // 球和方塊碰撞檢測
+        if (
+          ballX + ballRadius > block.offsetLeft &&
+          ballX - ballRadius < block.offsetLeft + blockWidth &&
+          ballY + ballRadius > block.offsetTop &&
+          ballY - ballRadius < block.offsetTop + blockHeight
+        ) {
+          ballSpeedY *= -1;
+          block.style.display = "none"; // 方塊消失
+        }
+
+        // 球出界檢測
+        if (ballY + ballRadius > gameContainer.offsetHeight) {
+          // alert("遊戲結束！");
+          document.location.reload();
+        }
+
+        ball.style.left = ballX + "px";
+        ball.style.top = ballY + "px";
+
+        requestAnimationFrame(update);
+      }
+
+      update();
+    </script>
+  </body>
+</html>
