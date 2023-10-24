@@ -286,3 +286,5 @@ function drawBeforeStart() {
   2. scoring zone
 
 */
+
+/* Thank you */
